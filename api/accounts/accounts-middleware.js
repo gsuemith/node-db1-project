@@ -1,6 +1,6 @@
 exports.checkAccountPayload = (req, res, next) => {
   // DO YOUR MAGIC
-  req.body.name = req.body.name.trim()
+  
   const { name, budget } = req.body
   let message = '';
 
@@ -11,7 +11,7 @@ exports.checkAccountPayload = (req, res, next) => {
     case typeof(name) === 'string':
       message = "name of account must be a string";
       break;
-    case name.length >= 3 && name.length <= 100:
+    case name.trim().length >= 3 && name.trim().length <= 100:
       message = "name of account must be between 3 and 100";
       break;
     case typeof(budget) === 'number':
@@ -25,6 +25,7 @@ exports.checkAccountPayload = (req, res, next) => {
   if (message) {
     res.status(400).json({ message })
   } else {
+    req.body.name = req.body.name.trim()
     next()
   }
 }
@@ -52,6 +53,10 @@ exports.checkAccountId = Accounts => async (req, res, next) => {
   .then(account => {
     if (account) {
       req.account = account
+      // req.body = {
+      //   name: req.body.name || account.name,
+      //   budget: req.body.budget || account.budget
+      // }
       next()
     } else {
       res.status(404).json({

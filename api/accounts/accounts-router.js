@@ -43,12 +43,25 @@ router.post('/',
   .catch(err => next(err))
 })
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', checkAccountPayload, checkAccountNameUnique(Accounts), (req, res, next) => {
   // DO YOUR MAGIC
+  Accounts.updateById(req.params.id, req.body)
+  .then(() => {
+    return Accounts.getById(req.params.id)
+  })
+  .then(account => {
+    res.json(account)
+  })
+  .catch(err => next(err))
 });
 
 router.delete('/:id', (req, res, next) => {
   // DO YOUR MAGIC
+  Accounts.deleteById(req.params.id)
+  .then(() => {
+    res.json(req.account)
+  })
+  .catch(err => next(err))
 })
 
 router.use((err, req, res, next) => { // eslint-disable-line

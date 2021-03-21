@@ -17,10 +17,12 @@ const create = async account => {
 
 const updateById = async (id, account) => {
   // DO YOUR MAGIC
+  return db('accounts').where({ id }).update(account)
 }
 
 const deleteById = async id => {
   // DO YOUR MAGIC
+  return db('accounts').where({ id }).del()
 }
 
 const checkUnique = async name => {
