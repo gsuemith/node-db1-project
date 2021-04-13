@@ -10,17 +10,17 @@ const getById = id => {
   return db('accounts').where({ id }).first()
 }
 
-const create = async account => {
+const create = account => {
   // DO YOUR MAGIC
   return db('accounts').insert(account)
 }
 
-const updateById = async (id, account) => {
+const updateById = (id, account) => {
   // DO YOUR MAGIC
   return db('accounts').where({ id }).update(account)
 }
 
-const deleteById = async id => {
+const deleteById = id => {
   // DO YOUR MAGIC
   return db('accounts').where({ id }).del()
 }
